@@ -28,30 +28,37 @@
         </div>
       </div>
 
-      <form class="well" action="/new" method="post"><p>
-      <div class="row">
-        <div class="span4">
-          <h3>App users redirected here:</h3><br>
-          <input name="appURL" type="text" class="input-large" placeholder="iOS App URL" value="{{ iosURL }}"><p>
-          <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ androidURL }}"><p>
+      <form action="/new" method="post"><p>
+        <div class="row">
+          <div class="span4">
+            <div class="well">
+            <h4>App users redirected here:</h3><br>
+            <input name="appURL" type="text" class="input-large" placeholder="iOS App URL" value="{{ iosURL }}"><p>
+            <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ androidURL }}"><p>
+            </div>
+          </div>
+
+          <div class="span4">
+            <div class="well">
+            <h4>Mobile users without the app redirected here: </h3><br>
+            <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ mobileURL }}"><p>
+            </div>
+          </div>
+          <div class="span4">
+            <div class="well">
+            <h4>Non-mobile users redirected here: </h3><br>
+            <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ webURL }}"><p>
+            </div>
+          </div>
+
         </div>
 
-        <div class="span4">
-          <h3>Mobile users without the app redirected here: </h3><br>
-          <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ mobileURL }}"><p>
-
-        </div>
-        <div class="span4">
-          <h3>Non-mobile users redirected here: </h3><br>
-          <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ webURL }}"><p>
-        </div>
-
-          <h3>Email: </h3>
+        <h3>Email: </h3>
         <input name="email" type="text" class="input-large" placeholder="Email" value="{{ email }}"><p>
         
         
         <button type="submit" class="btn">Generate Link</button>
-        </form>
+      </form>
       
 
       {% if hashURL %}
