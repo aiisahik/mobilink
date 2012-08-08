@@ -10,7 +10,9 @@ import hashlib, base64
 
 class StaticLinks(db.Model):
 	email = db.StringProperty()
-	appURL = db.StringProperty()
+	iosURL = db.StringProperty()
+	androidURL = db.StringProperty()
+	mobileURL = db.StringProperty()
 	webURL = db.StringProperty()
 	hashURL = db.StringProperty()
 	timestamp = db.DateTimeProperty(auto_now_add=True)
@@ -45,7 +47,7 @@ class StaticRedirectHandler(webapp2.RequestHandler):
 								"FROM StaticLinks WHERE hashURL = :1 LIMIT 1", hashURL[1:][:-1])
 		
 		for deepLink in q:
-			template_values = {'appURL':deepLink.appURL,'webURL':deepLink.webURL}
+			template_values = {'iosURL':deepLink.iosURL,'webURL':deepLink.webURL}
 			path = os.path.join(os.path.dirname(__file__), 'redirect.html')
 			self.response.out.write(template.render(path, template_values))
 
