@@ -3,10 +3,28 @@
 <title>REDIRECT</title>
   <body>
      <script language="javascript">
-        setTimeout(function() {
-          window.location = "{{ webURL }}";
-        }, 25);
-        window.location = "{{ appURL }}";
+        // setTimeout(function() {
+        //   window.location = "{{ webURL }}";
+        // }, 25);
+        // window.location = "{{ appURL }}";
+		
+        if (navigator.appVersion.indexOf('iPhone') > -1) {
+		  setTimeout(function noapp() { window.location="{{ mobileURL|safe }}"; }, 100);
+		  window.location = "{{ iosURL|safe }}";
+		}
+
+
+		else if (navigator.userAgent.indexOf('Android') > -1) {
+		  var iframe = document.createElement('iframe');
+		  iframe.style.visibility = 'hidden';
+		  iframe.src = '{{ androidURL|safe }}';
+		  iframe.onload = function noapp() { window.location="{{ mobileURL|safe }}"; };
+		  document.body.appendChild(iframe);
+		} else {
+			window.location = "{{ webURL|safe }}";
+		}
+
+
       </script>
   </body>
 </html>

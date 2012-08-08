@@ -35,41 +35,48 @@
       <form action="/new" method="post"><p>
         <div class="row">
           <div class="span4">
-            <div class="well">
+            <div class="well" align="center">
             <h4>App users redirected here:</h3><br>
-            <input name="appURL" type="text" class="input-large" placeholder="iOS App URL" value="{{ iosURL }}"><p>
-            <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ androidURL }}"><p>
+            <input name="iosURL" type="text" class="input-large" placeholder="iOS App URL" value="{{ iosURL }}"><p>
+            <input name="androidURL" type="text" class="input-large" placeholder="Web URL" value="{{ androidURL }}"><p>
             </div>
           </div>
 
           <div class="span4">
-            <div class="well">
+            <div class="well" align="center">
             <h4>Mobile users without the app redirected here: </h3><br>
-            <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ mobileURL }}"><p>
+            <input name="mobileURL" type="text" class="input-large" placeholder="Web URL" value="{{ mobileURL }}"><p>
             </div>
           </div>
           <div class="span4">
-            <div class="well">
+            <div class="well" align="center">
             <h4>Non-mobile users redirected here: </h3><br>
             <input name="webURL" type="text" class="input-large" placeholder="Web URL" value="{{ webURL }}"><p>
             </div>
           </div>
 
         </div>
-
-        <h3>Email: </h3>
-        <input name="email" type="text" class="input-large" placeholder="Email" value="{{ email }}"><p>
-        
-        
-        <button type="submit" class="btn">Generate Link</button>
+        <div class="well">
+          <div class="row">
+            <div class="span5">
+                <h4>Your Email to send yourself the generated link:</h4><br>
+                <input name="email" type="text" class="input-large" placeholder="Email" value="{{ email }}"> 
+            </div>
+            <div class="span5">
+              <br><br><button type="submit" class="btn btn-primary btn-large">Generate Link</button><p>
+            </div>
+          </div>
+        </div>
       </form>
       
 
       {% if hashURL %}
         <h3>DONE! </h3><br>
 
-        Now, <a href="http://plungr.appspot.com/({{ hashURL }})">http://plungr.appspot.com/({{ hashURL }})</a> will redirect to <br>
-        <a href="{{ appURL }}">{{ appURL }}</a> if the user is using an iPhone and has your iOS App installed or <br>
+        Now, <a href="http://plungr.appspot.com/({{ hashURL }})">http://plungr.appspot.com/({{ hashURL }})</a> will redirect to <br><br>
+        <a href="{{ iosURL }}">{{ iosURL }}</a> if the user is using an iPhone and has your iOS App installed or <br>
+        <a href="{{ androidURL }}">{{ androidURL }}</a> if the user is using an Android phone and has your App installed or <br><br>
+        <a href="{{ mobileURL }}">{{ mobileURL }}</a> if the user is using a mobile device but does not have your App installed or <br><br>
         <a href="{{ webURL }}">{{ webURL }}</a> otherwise<p>
         <a href="mailto:{{ email }}?Subject=Plungr Link&Body=Wow!%20%0A%0A%20http://plungr.appspot.com/({{ hashURL }})%20now%20redirects%20to%20{{ appURL }}%20if%20the%20user%20is%20using%20an%20iPhone%20and%20has%20your%20iOS%20App%20installed%20or%20%0A%0A%20{{ webURL }}%20otherwise">
           Send Link to me via email</a>

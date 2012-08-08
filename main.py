@@ -31,14 +31,46 @@ class NewStaticLinkHandler(webapp2.RequestHandler):
 		base64_hash_key = base64.urlsafe_b64encode(hash_key.digest()).rstrip('\n=').replace('+' , 'z').replace('/' , 'z').replace('=' , 'z')
 		hashURL = base64_hash_key[::2]
 		newStaticLink = StaticLinks()
-		newStaticLink.appURL = self.request.get('appURL')
-		newStaticLink.webURL = self.request.get('webURL')
+
+		if self.request.get('mobileURL') is None or len(self.request.get('mobileURL')) == 0:
+			mobileURL = self.request.get('webURL')
+		else:
+			mobileURL = self.request.get('mobileURL')
+
+		if self.request.get('iosURL') is None or len(self.request.get('iosURL')) == 0:
+			iosURL = mobileURL
+		else:
+			iosURL = self.request.get('iosURL')
+
+		if self.request.get('androidURL') is None or len(self.request.get('androidURL')) == 0:
+			androidURL = mobileURL
+		else:
+			androidURL = self.request.get('androidURL')
+
+		newStaticLink.iosURL = unescape(iosURL)
+		newStaticLink.androidURL = unescape(androidURL)
+		newStaticLink.mobileURL = unescape(mobileURL)
+		newStaticLink.webURL = unescape(self.request.get('webURL'))
 		newStaticLink.hashURL = hashURL
+		newStaticLink.email = self.request.get('email')
 		newStaticLink.put()
 		#self.response.write('Your Link is: <a href="/(' + base64_hash_key + ')">www.plungr.com/(' + base64_hash_key +')</a>')
-		template_values = {'appURL':self.request.get('appURL'),'webURL':self.request.get('webURL'),'hashURL':hashURL,'email':self.request.get('email')}
+		template_values = {'iosURL':iosURL,
+						'androidURL':androidURL,
+						'mobileURL':mobileURL,
+						'webURL':self.request.get('webURL'),
+						'hashURL':hashURL,
+						'email':self.request.get('email')}
+
 		path = os.path.join(os.path.dirname(__file__), 'index.html')
 		self.response.out.write(template.render(path, template_values))
+		return None
+
+def unescape(s):
+	s = s.replace("&lt;", "<")
+	s = s.replace("&gt;", ">")
+	s = s.replace("&amp;", "&")
+	return s
 
 class StaticRedirectHandler(webapp2.RequestHandler):
 	def get(self,hashURL):
@@ -47,7 +79,12 @@ class StaticRedirectHandler(webapp2.RequestHandler):
 								"FROM StaticLinks WHERE hashURL = :1 LIMIT 1", hashURL[1:][:-1])
 		
 		for deepLink in q:
-			template_values = {'iosURL':deepLink.iosURL,'webURL':deepLink.webURL}
+			template_values = {'iosURL':unescape(deepLink.iosURL),
+						'androidURL':unescape(deepLink.androidURL),
+						'mobileURL':unescape(deepLink.mobileURL),
+						'webURL':unescape(deepLink.webURL),
+						'hashURL':deepLink.hashURL}
+
 			path = os.path.join(os.path.dirname(__file__), 'redirect.html')
 			self.response.out.write(template.render(path, template_values))
 
