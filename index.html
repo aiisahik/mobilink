@@ -100,9 +100,9 @@
               <button type="submit" class="btn btn-primary btn-large">Generate Plungr link</button>
             </div>
           </div>
-          <br><br>
 
           {% if hashURL %}
+          <br><br>
           <div class="row">
             <h3>Here's your link! <a href="http://plungr.appspot.com/({{ hashURL }})">http://plungr.appspot.com/({{ hashURL }})</a></h3>
             <a class="btn btn-success btn-large" href="mailto:{{ email }}?Subject=Your Plungr Link&Body=Hi%20there!%20Thanks%20for%20trying%20Plungr.%20Here's%20your%20link!%0A%0Ahttp://plungr.appspot.com/({{ hashURL }})%20will%20redirect%20to:%0A-%20{{ iosURL }}%20if%20the%20user%20is%20on%20an%20iPhone%20and%20has%20your%20app%20installed%20or%0A-%20{{ androidURL }}%20if%20the%20user%20is%20on%20an%20Android%20phone%20and%20has%20your%20app%20installed%20or%0A-%20{{ mobileURL }}%20if%20the%20user%20is%20using%20a%20mobile%20device%20but%20does%20not%20have%20your%20app%20installed%20or%0A-%20{{ webURL }}%20if%20the%20user%20is%20at%20their%20computer%0A%0ALet%20us%20know%20if%20you%20have%20any%20feedback%20at%20plungr.info@gmail.com.%20">Send it to me</a>
